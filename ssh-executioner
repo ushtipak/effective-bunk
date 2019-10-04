@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Execute commands on multiple hosts, in sequence, with sshpass
+#
+# e.g.
+#   hosts=(milkne@10.96.73.23 milkne@10.96.73.19)
+#   cmd="hostname; hostname -f; dnsdomainname; facter fqdn; cat /etc/hostname; cat /etc/hosts"
+
+hosts=()
+cmd=""
+
+read -srp "Enter Password: " PASS; echo
+for host in "${hosts[@]}"; do
+  sshpass -p "${PASS}" ssh -o StrictHostKeyChecking=no "${host}" "${cmd}"
+done
+
